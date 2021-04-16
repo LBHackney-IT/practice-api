@@ -4,19 +4,19 @@ setup:
 
 .PHONY: build
 build:
-	docker-compose build base-api
+	docker-compose build practice-api
 
 .PHONY: serve
 serve:
-	docker-compose build base-api && docker-compose up base-api
+	docker-compose build practice-api && docker-compose up practice-api
 
 .PHONY: shell
 shell:
-	docker-compose run base-api bash
+	docker-compose run practice-api bash
 
 .PHONY: test
 test:
-	docker-compose up test-database & docker-compose build base-api-test && docker-compose up base-api-test
+	docker-compose up test-database & docker-compose build practice-api-test && docker-compose up practice-api-test
 
 .PHONY: lint
 lint:
