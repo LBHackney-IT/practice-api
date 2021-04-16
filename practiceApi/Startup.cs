@@ -172,7 +172,7 @@ namespace practiceApi
                 app.UseHsts();
             }
 
-            
+
             app.UseXRay("practice-api");
 
 
