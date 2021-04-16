@@ -1,21 +1,15 @@
 version: "3.2"
 
 services:
-  base-api:
-    image: base-api
+  practice-api:
+    image: practice-api
     build:
-      context: BaseApi/
+      context: practiceApi/
       dockerfile: ./Dockerfile
     ports:
       - 3000:3000
     environment:
       - CONNECTION_STRING=Host=dev-database;Port=5432;Database=testdb;Username=postgres;Password=mypassword
-# TODO: If using DynamoDb remove the line above and uncomment the section below.
-#      - DynamoDb_LocalMode=true
-#      - DynamoDb_LocalServiceUrl=http://dynamodb-database:8000
-#      - AWS_REGION=eu-west-2
-#      - AWS_ACCESS_KEY_ID=local
-#      - AWS_SECRET_ACCESS_KEY=local
     links:
       - dev-database
   dev-database:
@@ -25,27 +19,20 @@ services:
     volumes:
       - ./database:/docker-entrypoint-initdb.d
 
-  base-api-test:
-    image: base-api-test
+  practice-api-test:
+    image: practice-api-test
     build:
       context: .
-      dockerfile: BaseApi.Tests/Dockerfile
+      dockerfile: practiceApi.Tests/Dockerfile
     environment:
       - DB_HOST=test-database
       - DB_PORT=5432
       - DB_USERNAME=postgres
       - DB_PASSWORD=mypassword
       - DB_DATABASE=testdb
-# TODO: If using DynamoDb remove the line above and uncomment the section below.
-#      - DynamoDb_LocalMode=true
-#      - DynamoDb_LocalServiceUrl=http://dynamodb-database:8000
-#      - AWS_REGION=eu-west-2
-#      - AWS_ACCESS_KEY_ID=local
-#      - AWS_SECRET_ACCESS_KEY=local
     links:
       - test-database
-# TODO: If using DynamoDb remove the line above and uncomment the line below.
-#      - dynamodb-database
+
 
   test-database:
     image: test-database
@@ -57,8 +44,3 @@ services:
     env_file:
       - database.env
 
-# TODO: If using DynamoDb remove the 'test-database' seciton above and uncomment the lines below.
-#  dynamodb-database:
-#    image: amazon/dynamodb-local
-#    ports:
-#      - 8000:8000
